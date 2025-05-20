@@ -1,0 +1,622 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+:root {
+  --primary-color: #5046e5;
+  --primary-light: #6c63ff;
+  --primary-dark: #3832a0;
+  --secondary-color: #ff6b6b;
+  --text-color: #333;
+  --text-light: #666;
+  --background: #f8f9fa;
+  --white: #ffffff;
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  --border-radius: 10px;
+  --border: 1px solid #eaeaea;
+  --transition: all 0.3s ease;
+}
+a {
+  text-decoration: none;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: var(--background);
+  padding-bottom: 70px;
+  color: var(--text-color);
+}
+
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.95);
+  z-index: 1000;
+}
+
+.dots-loader {
+  display: flex;
+  align-items: center;
+}
+
+.dots-loader .dot {
+  height: 12px;
+  width: 12px;
+  margin: 0 5px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.dots-loader .dot:nth-child(2) {
+  animation-delay: 0.5s;
+}
+
+.dots-loader .dot:nth-child(3) {
+  animation-delay: 1s;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(0.8);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+.header {
+  background-color: var(--white);
+  padding: 15px 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header h1 {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.slider-wrapper {
+  position: relative;
+  margin: 20px 15px;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  height: 200px;
+}
+
+#slider {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.slider-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.slider-image.active {
+  opacity: 1;
+}
+
+.slider-dots {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.dot.active {
+  background-color: var(--white);
+  transform: scale(1.2);
+}
+
+.site-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 25px 15px;
+  padding: 10px;
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  overflow-x: auto;
+}
+
+.site-icons img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.site-icons img:hover {
+  transform: scale(1.1);
+  box-shadow: var(--shadow);
+}
+
+#container {
+  padding: 0 15px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+section {
+  margin-bottom: 30px;
+}
+
+.category-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--primary-light);
+}
+
+.category-header h2 {
+  font-size: 1.3rem;
+  color: var(--primary-dark);
+}
+
+.category-header button {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: var(--transition);
+}
+
+.category-header button:hover {
+  color: var(--primary-dark);
+  transform: translateX(3px);
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+}
+
+section .cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.card {
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  position: relative;
+  transition: var(--transition);
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.card h4 {
+  padding: 10px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stars {
+  padding: 0 10px;
+  font-size: 0.8rem;
+  color: #ffc107;
+}
+
+.card p {
+  padding: 10px;
+  font-weight: bold;
+  color: var(--primary-dark);
+}
+
+.like-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.like-btn i {
+  color: #ccc;
+  transition: var(--transition);
+}
+
+.like-btn.liked i {
+  color: var(--secondary-color);
+}
+
+.home-button {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  font-size: 24px;
+  background-color: #25D366;
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--shadow);
+  z-index: 99;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.home-button:hover {
+  transform: scale(1.1);
+}
+
+.whatsapp-button {
+  position: fixed;
+  bottom: 160px;
+  right: 20px;
+  background-color: #25D366;
+  color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--shadow);
+  z-index: 99;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.whatsapp-button:hover {
+  transform: scale(1.1);
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: var(--white);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 12px 0;
+  z-index: 100;
+}
+
+.footer a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text-light);
+  font-size: 0.7rem;
+  transition: var(--transition);
+}
+
+.footer a i {
+  font-size: 1.2rem;
+  margin-bottom: 3px;
+}
+
+.footer a.active {
+  color: var(--primary-color);
+}
+
+@media (min-width: 768px) {
+  .slider-wrapper {
+    height: 300px;
+    margin: 30px 15px;
+  }
+  
+  section .cards-container {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .card img {
+    height: 180px;
+  }
+  
+  .card h4 {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .slider-wrapper {
+    height: 400px;
+    margin: 30px auto;
+    max-width: 1200px;
+  }
+  
+  section .cards-container {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+  
+  .card img {
+    height: 200px;
+  }
+}
+</style>
+
+<div class="header">
+  <h1>ShopDeals</h1>
+</div>
+
+<div class="loader" id="loader">
+  <div class="dots-loader">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+</div>
+
+<div class="slider-wrapper">
+  <div id="slider"></div>
+  <div id="dots" class="slider-dots"></div>
+</div>
+
+<div class="site-icons" id="siteIcons"></div>
+<div id="container"></div>
+
+<a href="#" class="home-button" style="display: none;" id="homeButton">
+  <i class="fas fa-home"></i>
+</a>
+
+<a href="https://wa.me/919608212172" class="home-button">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<div class="footer">
+  <a href="bookmarks.html" id="bookmarkLink">
+    <i class="fa-brands fa-telegram"></i>
+    <span>Telegram</span>
+  </a>
+  <a href="#" id="homeLink" class="active">
+    <i class="fas fa-store"></i>
+    <span>Shop</span>
+  </a>
+  <a href="liked.html" id="likedLink">
+    <i class="fas fa-heart"></i>
+    <span>Favorites</span>
+  </a>
+</div>
+
+<script>
+  const loader = document.getElementById('loader');
+  let likedItems = localStorage.getItem('likedItems') ? JSON.parse(localStorage.getItem('likedItems')) : [];
+  
+  const homeButton = document.getElementById('homeButton');
+  homeButton.addEventListener('click', () => {
+    window.location.reload();
+  });
+  
+  const homeLink = document.getElementById('homeLink');
+  homeLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.reload();
+  });
+
+  fetch('https://script.google.com/macros/s/AKfycbxdiZLoxFi_UeSloG3Zp3btFAsCd37xYJ9J3OfKzJ_ph7z_Isa3XaL6UXaH-oJh0eF13Q/exec')
+    .then(res => res.json())
+    .then(([itemsData, sitesData, sliderData]) => {
+      loader.style.display = 'none';
+
+      const sliderDiv = document.getElementById('slider');
+      const dotsDiv = document.getElementById('dots');
+      let currentSlide = 0;
+
+      sliderData.forEach(([img, url], index) => {
+        const image = document.createElement('img');
+        image.src = img;
+        image.className = 'slider-image';
+        if (index === 0) image.classList.add('active');
+        image.onclick = () => window.location.href = url;
+        sliderDiv.appendChild(image);
+
+        const dot = document.createElement('span');
+        dot.className = 'dot';
+        if (index === 0) dot.classList.add('active');
+        dot.onclick = () => showSlide(index);
+        dotsDiv.appendChild(dot);
+      });
+
+      function showSlide(index) {
+        const images = document.querySelectorAll('.slider-image');
+        const dots = document.querySelectorAll('.dot');
+        images.forEach((img, i) => {
+          img.classList.toggle('active', i === index);
+        });
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === index);
+        });
+        currentSlide = index;
+      }
+
+      setInterval(() => {
+        currentSlide = (currentSlide + 1) % sliderData.length;
+        showSlide(currentSlide);
+      }, 5000);
+
+      const siteIcons = document.getElementById('siteIcons');
+      sitesData.forEach(([icon, name]) => {
+        const img = document.createElement('img');
+        img.src = icon;
+        img.onclick = () => {
+          localStorage.setItem('site', name);
+          window.location.href = 'site.html';
+        };
+        siteIcons.appendChild(img);
+      });
+
+      const container = document.getElementById('container');
+      const grouped = {};
+
+      itemsData.forEach(item => {
+        const category = item[6];
+        if (!grouped[category]) grouped[category] = [];
+        grouped[category].push(item);
+      });
+
+      Object.keys(grouped).forEach(category => {
+        const section = document.createElement('section');
+
+        const header = document.createElement('div');
+        header.className = 'category-header';
+
+        const h2 = document.createElement('h2');
+        h2.textContent = category;
+
+        const viewBtn = document.createElement('button');
+        viewBtn.textContent = 'View All';
+        viewBtn.onclick = () => {
+          localStorage.setItem('category', category);
+          window.location.href = 'category.html';
+        };
+
+        header.appendChild(h2);
+        header.appendChild(viewBtn);
+        section.appendChild(header);
+        
+        const cardsContainer = document.createElement('div');
+        cardsContainer.className = 'cards-container';
+        section.appendChild(cardsContainer);
+
+        grouped[category].slice(0, 6).forEach(item => {
+          const [imgURL, title, rating, price, , url] = item;
+          const rowData = item.join('||');
+
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.onclick = (e) => {
+            if (!e.target.classList.contains('like-btn') && !e.target.parentElement.classList.contains('like-btn')) {
+              window.location.href = url;
+            }
+          };
+
+          const img = document.createElement('img');
+          img.src = imgURL;
+          img.loading = 'lazy';
+
+          const titleEl = document.createElement('h4');
+          titleEl.textContent = title;
+
+          const ratingEl = document.createElement('div');
+          ratingEl.className = 'stars';
+          ratingEl.innerHTML = getStarsHTML(parseFloat(rating));
+
+          const priceEl = document.createElement('p');
+          priceEl.textContent = `₹${price}`;
+
+          const likeBtn = document.createElement('button');
+          likeBtn.className = 'like-btn';
+          likeBtn.innerHTML = '<i class="fas fa-heart"></i>';
+          if (likedItems.includes(rowData)) likeBtn.classList.add('liked');
+
+          likeBtn.onclick = function(e) {
+            e.stopPropagation();
+            const index = likedItems.indexOf(rowData);
+            if (index !== -1) {
+              likedItems.splice(index, 1);
+              likeBtn.classList.remove('liked');
+            } else {
+              likedItems.push(rowData);
+              likeBtn.classList.add('liked');
+            }
+            localStorage.setItem('likedItems', JSON.stringify(likedItems));
+          };
+
+          card.appendChild(img);
+          card.appendChild(likeBtn);
+          card.appendChild(titleEl);
+          card.appendChild(ratingEl);
+          card.appendChild(priceEl);
+          cardsContainer.appendChild(card);
+        });
+
+        container.appendChild(section);
+      });
+    });
+
+  function getStarsHTML(rating) {
+    let stars = '';
+    for (let i = 1; i <= 5; i++) {
+      if (rating >= i) {
+        stars += '<i class="fas fa-star"></i>';
+      } else if (rating >= i - 0.5) {
+        stars += '<i class="fas fa-star-half-alt"></i>';
+      } else {
+        stars += '<i class="far fa-star"></i>';
+      }
+    }
+    return stars;
+  }
+</script>
